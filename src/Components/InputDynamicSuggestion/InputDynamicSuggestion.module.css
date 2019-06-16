@@ -1,31 +1,47 @@
 .main {
+    margin: 5px;
+    padding: 5px;
     height: 30px;
-    width: 200px;
+    width: 220px;
     display: flex;
     position: relative;
+    border: 1px solid black;
 }
 
 .input {
+    width: 150px;
     height: 30px;
-    width: 200px;
     padding: 0;
     margin: 0;
     border: none;
     position: absolute;
     z-index: 1;
-    font-size: 12pt;
-    color: rgb(0,0,0,0);
+    font: 400 13.3333px Arial;
     caret-color: black;
+    background-color: transparent;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.dumbyInput {
+    height: 30px;
+    flex: 1;
+    padding: 0;
+    margin: 0;
+    border: none;
+    font: 400 13.3333px Arial;
+    color: grey;
     background-color: transparent;
 }
 
 .text {
     flex: 0 1;
-    font-size: 12pt;
+    font: 400 13.3333px Arial;
+    max-width: 150px;
+    letter-spacing: normal;
+    white-space: nowrap;
+    color: transparent;
 }
 
-.placehold {
-    flex: 1;
-    font-size: 12pt;
-    text-align: left;
-}
