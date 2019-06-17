@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import styles from "./InputDynamicSuggestion.module.css";
 
-const escapeSpaces = (text) => {
-    return text.replace(/ /g, '/');
-}
+const escapeSpaces = text => {
+  return text.replace(/ /g, "/");
+};
 
-const handle = "@rbc.com"
+const handle = "@rbc.com";
 
 class InputDynamicSuggestion extends Component {
   constructor(props) {
@@ -14,24 +14,26 @@ class InputDynamicSuggestion extends Component {
     const { initialPlaceHolder } = this.props;
     this.state = {
       placeholder: initialPlaceHolder,
-      textValue: "",
+      textValue: ""
     };
-    this.inputRef = React.createRef();
+    this.leftValueInput = React.createRef();
+    this.rightValueInput = React.createRef();
+    this.leftPlaceHoldDiv = React.createRef();
+    this.rightPlaceHoldDiv = React.createRef();
   }
-
 
   onValueChange = event => {
     const val = event.target.value;
     const { initialPlaceHolder } = this.props;
     let placeholder = val ? handle : initialPlaceHolder;
-    if (val && val.includes("@")){
-        const index = val.indexOf("@");
-        const extension = val.substring(index);
-        if (handle.includes(extension)){
-            placeholder = placeholder.replace(extension, "");
-        } else {
-            placeholder = "";
-        }
+    if (val && val.includes("@")) {
+      const index = val.indexOf("@");
+      const extension = val.substring(index);
+      if (handle.includes(extension)) {
+        placeholder = placeholder.replace(extension, "");
+      } else {
+        placeholder = "";
+      }
     }
     this.setState({
       textValue: val,
@@ -40,27 +42,55 @@ class InputDynamicSuggestion extends Component {
   };
 
   focusOnInput = () => {
-      this.inputRef.current.focus();
+    this.leftValueInput.current.focus();
+  };
+
+  componentDidMount(){
+    this.alignWidths()
+  }
+
+  componentDidUpdate(){
+      this.alignWidths();
+  }
+
+  alignWidths = () => {
+    this.leftValueInput.current.style.width = `${Math.max(this.leftPlaceHoldDiv.current.clientWidth+0.5, 1)}px`;
+    this.rightValueInput.current.style.width = `${this.rightPlaceHoldDiv.current.clientWidth}px`;
   }
 
   render() {
     const { placeholder, textValue } = this.state;
     return (
       <div className={styles.main}>
-        <div className={styles.text}>{escapeSpaces(textValue)}</div>
-        <input className={styles.dumbyInput} value={placeholder} onFocus={this.focusOnInput}/>
-        <input className={styles.input} ref={this.inputRef} value={textValue} onChange={this.onValueChange} />
+        <div className={styles.groundProxy}>
+          <div className={styles.valueText} ref={this.leftPlaceHoldDiv}>{escapeSpaces(textValue)}</div>
+          <div className={styles.placeHoldText} ref={this.rightPlaceHoldDiv}>{escapeSpaces(placeholder)}</div>
+        </div>
+        <div className={styles.floatingInputs}>
+          <input
+            className={styles.input}
+            ref={this.leftValueInput}
+            value={textValue}
+            onChange={this.onValueChange}
+          />
+          <input
+            className={styles.inputTemp}
+            ref={this.rightValueInput}
+            value={placeholder}
+            onFocus={this.focusOnInput}
+          />
+        </div>
       </div>
     );
   }
 }
 
 InputDynamicSuggestion.propTypes = {
-    initialPlaceHolder: PropTypes.string
-}
+  initialPlaceHolder: PropTypes.string
+};
 
 InputDynamicSuggestion.defaultProps = {
-    initialPlaceHolder: ''
-}
+  initialPlaceHolder: ""
+};
 
 export default InputDynamicSuggestion;

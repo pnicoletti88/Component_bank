@@ -7,17 +7,36 @@
     position: relative;
     border: 1px solid black;
 }
+.floatingInputs {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    width: 220px;
+}
+
+.groundProxy {
+    display: flex;
+    width: 220px;
+}
 
 .input {
-    width: 150px;
     height: 30px;
     padding: 0;
     margin: 0;
     border: none;
-    position: absolute;
-    z-index: 1;
     font: 400 13.3333px Arial;
     caret-color: black;
+    background-color: transparent;
+}
+
+.inputTemp {
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    font: 400 13.3333px Arial;
+    caret-color: black;
+    color: grey;
     background-color: transparent;
 }
 
@@ -25,23 +44,20 @@
     outline: none;
 }
 
-.dumbyInput {
-    height: 30px;
-    flex: 1;
-    padding: 0;
-    margin: 0;
-    border: none;
-    font: 400 13.3333px Arial;
-    color: grey;
-    background-color: transparent;
-}
-
-.text {
+.valueText {
     flex: 0 1;
     font: 400 13.3333px Arial;
-    max-width: 150px;
     letter-spacing: normal;
     white-space: nowrap;
     color: transparent;
+}
+
+.placeHoldText {
+    flex: 1;
+    font: 400 13.3333px Arial;
+    letter-spacing: normal;
+    white-space: nowrap;
+    color: transparent;
+    overflow: hidden;
 }
 
